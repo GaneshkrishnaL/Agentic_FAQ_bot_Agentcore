@@ -1,4 +1,4 @@
-# 📱 Agentic FAQ Bot (Lauki Phones Support)
+# 📱 Agentic FAQ Bot 
 
 An intelligent, agentic FAQ assistant for Lauki Phones built with **LangGraph**, **RAG**, and **Groq**. This assistant doesn't just search for text; it reasons through user queries to provide accurate, synthesized answers from a specialized telecom knowledge base.
 
