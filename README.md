@@ -1,66 +1,68 @@
 # 📱 Agentic FAQ Bot 
 
-An intelligent, agentic FAQ assistant for Lauki Phones built with **LangGraph**, **RAG**, and **Groq**. This assistant doesn't just search for text; it reasons through user queries to provide accurate, synthesized answers from a specialized telecom knowledge base.
+An intelligent, agentic FAQ assistant for Lauki Phones built with **LangGraph**, **RAG**, **Groq**, and **Amazon Bedrock AgentCore**. This assistant reasons through user queries to provide accurate, synthesized answers and features **persistent conversation memory**.
 
 ## 🚀 Overview
 
-This project implements a sophisticated **Retrieval-Augmented Generation (RAG)** pipeline. Unlike static search engines, this assistant uses an **Agentic workflow** to:
+This project implements a sophisticated **Retrieval-Augmented Generation (RAG)** pipeline with **Memory**. The assistant use an **Agentic workflow** to:
 1. **Analyze** the user's intent.
-2. **Search** a vector database (FAISS) for relevant context.
-3. **Reformulate** queries if initial results are too broad or narrow.
-4. **Synthesize** a final, helpful response for the customer.
+2. **Retrieve** context from a vector database (FAISS).
+3. **Persist** conversation history using **AgentCore Memory** and `langgraph-checkpoint-aws`.
+4. **Reformulate** queries dynamically if initial results are insufficient.
 
 ## 🛠️ Technology Stack
 
 - **Framework**: [LangGraph](https://github.com/langchain-ai/langgraph) / [LangChain](https://github.com/langchain-ai/langchain)
-- **LLM**: [Groq](https://groq.com/) (GPT-4 class performance with ultra-low latency)
-- **Embeddings**: `sentence-transformers/all-MiniLM-L6-v2` (via HuggingFace)
+- **Deployment**: [Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/)
+- **Memory**: `langgraph-checkpoint-aws` (Backed by AgentCore Memory)
+- **LLM**: [Groq](https://groq.com/) (Ultra-low latency inference)
+- **Embeddings**: `sentence-transformers/all-MiniLM-L6-v2`
 - **Vector Store**: [FAISS](https://github.com/facebookresearch/faiss)
 - **Package Manager**: [uv](https://github.com/astral-sh/uv)
-- **Environment**: Python 3.13+
 
 ## 📂 Project Structure
 
-- `00_langgraph_agent.py`: Core logic for the LangGraph agent and RAG tools.
+- `agentcore_runtime.py`: Entrypoint for the standard AgentCore runtime.
+- `agentcore_memory.py`: Advanced agent implementation with persistent memory support.
+- `00_langgraph_agent.py`: Initial core logic for the LangGraph agent.
 - `lauki_qna.csv`: The knowledge base containing 75+ telecom-specific Q&A pairs.
-- `.env`: (Local only) API keys and configuration.
+- `.bedrock_agentcore.yaml`: Configuration for Bedrock AgentCore deployment.
 - `pyproject.toml`: Project dependencies and metadata.
 
 ## ⚙️ Setup Instructions
 
 ### 1. Prerequisites
-Ensure you have `uv` installed:
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
+Ensure you have `uv` and `aws-cli` installed and configured.
 
 ### 2. Install Dependencies
 ```bash
-uv venv
-source .venv/bin/activate
-uv sync
+uv sync --python 3.12
 ```
 
 ### 3. Environment Variables
-Create a `.env` file in the root directory:
+Ensure your `.env` contains:
 ```env
 GROQ_API_KEY=your_groq_api_key
-# Optional: For tracing
-LANGSMITH_TRACING=true
-LANGSMITH_API_KEY=your_langsmith_api_key
+HUGGINGFACEHUB_API_TOKEN=your_hf_token
+AWS_REGION=us-east-1
 ```
 
-### 4. Run the Agent
+### 4. Deploy & Invoke via AgentCore
+To run the agent with memory support:
 ```bash
-uv run python 00_langgraph_agent.py
+# Launch the dev server
+uv run agentcore dev --agent fq_memory
+
+# Invoke the agent
+uv run agentcore invoke '{"prompt": "Hello, my name is Ganesh"}' --dev --agent fq_memory
 ```
 
-## 🧠 How it Works
+## 🧠 Memory Feature
 
-The agent uses a multi-tool strategy:
-- `search_faq`: General semantic search across the FAQ database.
-- `search_detailed_faq`: High-recall search for complex queries.
-- `reformulate_query`: Intelligent query expansion to target specific "aspects" (e.g., troubleshooting, pricing).
+The agent uses `AgentCoreMemorySaver` and `AgentCoreMemoryStore` from `langgraph-checkpoint-aws`. This allows the agent to:
+- Remember user names and preferences across sessions.
+- Maintain short-term conversation context.
+- Retrieve long-term memories relevant to the current query.
 
 ## 📄 License
 This project is for educational purposes as part of the Agentcore Crash Course.

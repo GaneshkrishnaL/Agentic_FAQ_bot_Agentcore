@@ -1,0 +1,182 @@
+default_agent: fq_memory
+agents:
+  faq_agent:
+    name: faq_agent
+    language: python
+    node_version: '20'
+    entrypoint: agentcore_runtime.py
+    deployment_type: direct_code_deploy
+    runtime_type: PYTHON_3_12
+    platform: linux/amd64
+    container_runtime: none
+    source_path: .
+    aws:
+      execution_role: arn:aws:iam::260028436836:role/AmazonBedrockAgentCoreSDKRuntime-us-east-1-a4d7831739
+      execution_role_auto_create: false
+      account: '260028436836'
+      region: us-east-1
+      ecr_repository: null
+      ecr_auto_create: false
+      s3_path: null
+      s3_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+        network_mode_config: null
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+      lifecycle_configuration:
+        idle_runtime_session_timeout: null
+        max_lifetime: null
+    bedrock_agentcore:
+      agent_id: faq_agent-8MHuUECXtH
+      agent_arn: arn:aws:bedrock-agentcore:us-east-1:260028436836:runtime/faq_agent-8MHuUECXtH
+      agent_session_id: 80094d66-da6e-4951-8dce-562be69d57d7
+    codebuild:
+      project_name: null
+      execution_role: null
+      source_bucket: null
+    memory:
+      mode: NO_MEMORY
+      memory_id: null
+      memory_arn: null
+      memory_name: null
+      event_expiry_days: 30
+      first_invoke_memory_check_done: false
+      was_created_by_toolkit: false
+    identity:
+      credential_providers: []
+      workload: null
+    aws_jwt:
+      enabled: false
+      audiences: []
+      signing_algorithm: ES384
+      issuer_url: null
+      duration_seconds: 300
+    authorizer_configuration: null
+    request_header_configuration: null
+    oauth_configuration: null
+    api_key_env_var_name: null
+    api_key_credential_provider_name: null
+    is_generated_by_agentcore_create: false
+  faq_memory_agent:
+    name: faq_memory_agent
+    language: python
+    node_version: '20'
+    entrypoint: agentcore_memory.py
+    deployment_type: direct_code_deploy
+    runtime_type: PYTHON_3_12
+    platform: linux/amd64
+    container_runtime: none
+    source_path: .
+    aws:
+      execution_role: arn:aws:iam::260028436836:role/AmazonBedrockAgentCoreSDKRuntime-us-east-1-a4d7831739
+      execution_role_auto_create: false
+      account: '260028436836'
+      region: us-east-1
+      ecr_repository: null
+      ecr_auto_create: false
+      s3_path: null
+      s3_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+        network_mode_config: null
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+      lifecycle_configuration:
+        idle_runtime_session_timeout: null
+        max_lifetime: null
+    bedrock_agentcore:
+      agent_id: null
+      agent_arn: null
+      agent_session_id: null
+    codebuild:
+      project_name: null
+      execution_role: null
+      source_bucket: null
+    memory:
+      mode: STM_AND_LTM
+      memory_id: faq_agent_memory-zXrEPpExTj
+      memory_arn: arn:aws:bedrock-agentcore:us-east-1:260028436836:memory/faq_agent_memory-zXrEPpExTj
+      memory_name: faq_agent_memory
+      event_expiry_days: 30
+      first_invoke_memory_check_done: false
+      was_created_by_toolkit: false
+    identity:
+      credential_providers: []
+      workload: null
+    aws_jwt:
+      enabled: false
+      audiences: []
+      signing_algorithm: ES384
+      issuer_url: null
+      duration_seconds: 300
+    authorizer_configuration: null
+    request_header_configuration: null
+    oauth_configuration: null
+    api_key_env_var_name: null
+    api_key_credential_provider_name: null
+    is_generated_by_agentcore_create: false
+  fq_memory:
+    name: fq_memory
+    language: python
+    node_version: '20'
+    entrypoint: /Users/ganeshkrishnalakshmisetty/agentcore-project/agentcore_memory.py
+    deployment_type: container
+    runtime_type: null
+    platform: linux/arm64
+    container_runtime: none
+    source_path: /Users/ganeshkrishnalakshmisetty/agentcore-project
+    aws:
+      execution_role: arn:aws:iam::260028436836:role/AmazonBedrockAgentCoreSDKRuntime-us-east-1-391c507ec4
+      execution_role_auto_create: false
+      account: '260028436836'
+      region: us-east-1
+      ecr_repository: 260028436836.dkr.ecr.us-east-1.amazonaws.com/bedrock-agentcore-fq_memory
+      ecr_auto_create: false
+      s3_path: null
+      s3_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+        network_mode_config: null
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+      lifecycle_configuration:
+        idle_runtime_session_timeout: null
+        max_lifetime: null
+    bedrock_agentcore:
+      agent_id: fq_memory-2ZEazMEBOw
+      agent_arn: arn:aws:bedrock-agentcore:us-east-1:260028436836:runtime/fq_memory-2ZEazMEBOw
+      agent_session_id: 2a57312f-4204-415e-b8c5-8f4b8454601c
+    codebuild:
+      project_name: bedrock-agentcore-fq_memory-builder
+      execution_role: arn:aws:iam::260028436836:role/AmazonBedrockAgentCoreSDKCodeBuild-us-east-1-391c507ec4
+      source_bucket: bedrock-agentcore-codebuild-sources-260028436836-us-east-1
+    memory:
+      mode: STM_AND_LTM
+      memory_id: faq_agent_memory-zXrEPpExTj
+      memory_arn: null
+      memory_name: fq_memory_memory
+      event_expiry_days: 30
+      first_invoke_memory_check_done: false
+      was_created_by_toolkit: false
+    identity:
+      credential_providers: []
+      workload: null
+    aws_jwt:
+      enabled: false
+      audiences: []
+      signing_algorithm: ES384
+      issuer_url: null
+      duration_seconds: 300
+    authorizer_configuration: null
+    request_header_configuration: null
+    oauth_configuration: null
+    api_key_env_var_name: null
+    api_key_credential_provider_name: null
+    is_generated_by_agentcore_create: false
